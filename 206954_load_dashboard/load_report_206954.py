@@ -11,8 +11,8 @@ from plotly.subplots import make_subplots
 def run_dashboard():
 
     st.set_page_config(page_title="St. Lawrence School Load Report", layout="wide")
-    st.title("🏫 St. Lawrence County School Load Profile Dashboard")
-    st.markdown("Prepared by Grid Discovery  ")
+    st.title("🏫 St. Lawrence County School")
+    st.markdown("Load Profile Dashboard - Prepared by Grid Discovery  ")
     st.markdown("---")
 
     # Load pre-existing CSV data with corrected filename
@@ -100,7 +100,7 @@ def run_dashboard():
         st.subheader("📋 Executive Summary")
 
         st.markdown("**Description:** A K-12 school in St. Lawrence County, NY")
-        st.markdown("**Compare to:** 1-story 150k square foot secondary school in St. Lawrence County, NJ")
+        st.markdown("**Compare to:** 1-story 150k square foot secondary school in St. Lawrence County, NY")
         st.markdown("**Heating source:** Natural gas")
         st.markdown("**Equipment:**")
         st.markdown("• HVAC system: Central multi-zone variable air volume RTU with boiler")
