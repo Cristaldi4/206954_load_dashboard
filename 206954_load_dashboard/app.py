@@ -8,13 +8,13 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-st.set_page_config(page_title="Office Building Load Report", layout="wide")
-st.title("🏢 Office Building Load Profile Dashboard")
+st.set_page_config(page_title="St. Lawrence School Load Report", layout="wide")
+st.title("🏫 St. Lawrence County School Load Profile Dashboard")
 st.markdown("Prepared by Grid Discovery  ")
 st.markdown("---")
 
 # Load pre-existing CSV data with corrected filename
-file_path = "198126_load_dashboard/198126_Essex County_Large Office.csv"
+file_path = "206954_load_dashboard/206954_stlawrence_county_secondary_school.csv"
 data = pd.read_csv(file_path)
 data['timestamp'] = pd.to_datetime(data['timestamp'])
 data = data.sort_values('timestamp')
@@ -28,12 +28,33 @@ season_mapping = {
 }
 data['season'] = data['timestamp'].dt.month.map(season_mapping)
 
+# Rename columns to match expected format (if needed)
+rename_map = {
+    'out.electricity.cooling.energy_consumption': 'cooling_kWh',
+    'out.electricity.exterior_lighting.energy_consumption': 'exterior_lighting_kWh',
+    'out.electricity.fans.energy_consumption': 'fans_kWh',
+    'out.electricity.interior_equipment.energy_consumption': 'interior_equipment_kWh',
+    'out.electricity.interior_lighting.energy_consumption': 'interior_lighting_kWh',
+    'out.electricity.total.energy_consumption': 'energy_kWh'
+}
+data = data.rename(columns=rename_map)
+
+# Compute load_kW if missing
+if 'load_kW' not in data.columns and 'energy_kWh' in data.columns:
+    data['load_kW'] = data['energy_kWh'] / 0.25  # Convert kWh in 15-min interval to kW
+
+
 # Ensure column names are correct
-expected_columns = ['timestamp', 'load_kW', 'energy_kWh', 'cooling_kWh', 'exterior_lighting_kWh', 'fans_kWh', 'interior_equipment_kWh', 'interior_lighting_kWh']
+expected_columns = [
+    'timestamp', 'load_kW', 'energy_kWh',
+    'cooling_kWh', 'exterior_lighting_kWh', 'fans_kWh',
+    'interior_equipment_kWh', 'interior_lighting_kWh'
+]
 missing_columns = [col for col in expected_columns if col not in data.columns]
 if missing_columns:
     st.error(f"Missing required column(s): {', '.join(missing_columns)}")
     st.stop()
+
 
 # Calculate metrics needed for summary
 annual_energy_consumption = data['energy_kWh'].sum()
