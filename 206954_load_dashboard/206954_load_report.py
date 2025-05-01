@@ -62,8 +62,8 @@ peak_demand = data['load_kW'].max()
 average_load = data['load_kW'].mean()
 load_factor = annual_energy_consumption / (peak_demand * 8760)
 monthly_avg_demand = data.resample('ME', on='timestamp')['load_kW'].mean()
-annual_demand_charge_rate = 4.7075
-summer_demand_charge_rate = 16.1987
+annual_demand_charge_rate = 14.85
+summer_demand_charge_rate = 0
 all_in_summer_demand_charge = annual_demand_charge_rate + summer_demand_charge_rate
 monthly_avg_demand = monthly_avg_demand.reset_index()
 monthly_avg_demand['month_num'] = monthly_avg_demand['timestamp'].dt.month
@@ -97,11 +97,12 @@ section = st.sidebar.radio("Jump to:", [
 if section == "Executive Summary":
     st.subheader("📋 Executive Summary")
 
-    st.markdown("**Description:** Large office building in Newark, NJ")
-    st.markdown("**Compare to:** 8-story 750k square foot office building in Essex County, NJ")
+    st.markdown("**Description:** A K-12 school in St. Lawrence County, NY")
+    st.markdown("**Compare to:** 1-story 150k square foot secondary school in St. Lawrence County, NJ")
+    st.markdown("**Heating source:** Natural gas")
     st.markdown("**Equipment:**")
-    st.markdown("• HVAC system: Packaged variable air volume with gas boiler reheat")
-    st.markdown("• Lighting: T12 incandescent")
+    st.markdown("• HVAC system: Central multi-zone variable air volume RTU with boiler")
+    st.markdown("• Lighting: gen4 LED")
     st.markdown(f"**Estimated annual demand savings:** ${avg_demand_charge_total:,.2f}")
     st.markdown(f"**Building load factor:** {load_factor:.2f}")
 
@@ -343,6 +344,14 @@ elif section == "Descriptive Statistics":
     st.markdown(f"**Monthly Average Load:** {average_load_monthly.mean():.2f} kW")
     st.markdown(f"**Grid Discovery Opportunity:** {grid_discovery_opportunity:.2f}")
 
+    st.markdown("---")
+    st.markdown("**Insights:**")
+    st.markdown("""
+    The low load factor provides some opportunities for energy efficiency improvements. 
+                
+    The relatively medium-high demand in combination with the low load factor indicates that there are some opportunities for demand response and load shifting, thus providing a relatively high Grid Discovery opportunity score of 600.
+    """)
+
 
 elif section == "Monthly Demand Charges":
     st.subheader("📈 Monthly Demand Charges")
@@ -382,6 +391,14 @@ elif section == "Monthly Demand Charges":
     st.markdown(f"**Total Annual Demand Charges (Avg-Based):** ${avg_demand_charge_total:,.2f}")
     st.markdown(f"**Potential Annual Demand Savings:** ${monthly_peaks['demand_charge'].sum() - avg_demand_charge_total:,.2f}")
 
+    st.markdown("---")
+    st.markdown("**Insights:**")
+    st.markdown("""
+    Demand charges were calculated using a monthly demand charge of $14.85.
+
+    All values can be updated accordingly based on respective utility tariffs and schedule.
+    """)
+
 
 
 elif section == "Top 10 Peak Days":
@@ -396,7 +413,7 @@ elif section == "Top 10 Peak Days":
         day_data = data[data['timestamp'].dt.date == day.date()]
         peak_row = day_data.loc[day_data['load_kW'].idxmax()]
         top_10_peaks_with_time.append({
-            'Date': day.strftime('%Y-%m-%d'),
+            'Date': day.strftime('%A, %B, %-d'),
             'Time of Peak': peak_row['timestamp'].strftime('%H:%M'),
             'Peak Load (kW)': round(peak_row['load_kW'], 2)
         })
@@ -442,7 +459,7 @@ elif section == "Monthly Peak and Average Demand":
 
     monthly_peak_profile = data.resample('ME', on='timestamp')['load_kW'].max()
     monthly_avg_profile = data.resample('ME', on='timestamp')['load_kW'].mean()
-    months = monthly_peak_profile.index.strftime('%b %Y')
+    months = monthly_peak_profile.index.strftime('%b')
 
     fig = go.Figure()
     fig.add_trace(go.Bar(
@@ -665,6 +682,14 @@ elif section == "Annual Load Duration Curve":
     )
 
     st.plotly_chart(fig, use_container_width=True, config={'staticPlot': True})
+
+    st.markdown("---")
+    st.markdown("**Insights:**")
+    st.markdown("""
+    Annual load is fairly consistent with gradual increases throughout the year.
+
+    However, there are a few days contributing to the spike in demand in the last 95th percentile - which is likely contributing to a peaky profile and low load factor.
+    """)
 
 
 
