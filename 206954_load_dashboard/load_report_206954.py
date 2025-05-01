@@ -16,7 +16,7 @@ def run_dashboard():
     st.markdown("---")
 
     # Load pre-existing CSV data with corrected filename
-    file_path = "/Users/matthewcristaldi/New App Offering/206954_load_dashboard/206954_stlawrence_county_secondary_school.csv"
+    file_path = "206954_stlawrence_county_secondary_school.csv"
     data = pd.read_csv(file_path)
     data['timestamp'] = pd.to_datetime(data['timestamp'])
     data = data.sort_values('timestamp')
