@@ -100,11 +100,11 @@ def run_dashboard():
         st.subheader("📋 Executive Summary")
 
         st.markdown("**Description:** A K-12 school in St. Lawrence County, NY")
-        st.markdown("**Compare to:** 1-story 150k square foot secondary school in St. Lawrence County, NY")
+        st.markdown("**Compare to:** 1-story 75k square foot secondary school in Delaware County, NY")
         st.markdown("**Heating source:** Natural gas")
         st.markdown("**Equipment:**")
-        st.markdown("• HVAC system: Central multi-zone variable air volume RTU with boiler")
-        st.markdown("• Lighting: gen4 LED")
+        st.markdown("• HVAC system: DOAS with fan coil air-cooled chiller with boiler")
+        st.markdown("• Lighting: gen5 LED")
         st.markdown(f"**Estimated annual demand savings:** ${avg_demand_charge_total:,.2f}")
         st.markdown(f"**Building load factor:** {load_factor:.2f}")
 
@@ -351,7 +351,7 @@ def run_dashboard():
         st.markdown("""
         The low load factor provides some opportunities for energy efficiency improvements. 
                     
-        The relatively medium-high demand in combination with the low load factor indicates that there are some opportunities for demand response and load shifting, thus providing a relatively high Grid Discovery opportunity score of 600.
+        However, the relatively low demand in combination with the low load factor indicates that there is very little opportunity for demand response and load shifting, thus providing a low Grid Discovery opportunity score of 220.
         """)
 
 
@@ -690,7 +690,7 @@ def run_dashboard():
         st.markdown("""
         Annual load is fairly consistent with gradual increases throughout the year.
 
-        However, there are a few days contributing to the spike in demand in the last 95th percentile - which is likely contributing to a peaky profile and low load factor.
+        The peak occurs very infrequently, raising the concept that this profile might benefit more from energy efficiency upgrades rather than peak shaving opportunities.
         """)
 
 
