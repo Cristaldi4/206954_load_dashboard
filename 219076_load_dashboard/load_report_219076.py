@@ -100,7 +100,7 @@ def run_dashboard():
         st.subheader("📋 Executive Summary")
 
         st.markdown("**Description:** A K-12 school in St. Lawrence County, NY")
-        st.markdown("**Compare to:** 1-story 75k square foot secondary school in Delaware County, NY")
+        st.markdown("**Compare to:** 1-story 75k square foot primary school in Delaware County, NY")
         st.markdown("**Heating source:** Natural gas")
         st.markdown("**Equipment:**")
         st.markdown("• HVAC system: DOAS with fan coil air-cooled chiller with boiler")
