@@ -1,5 +1,5 @@
 # app.py
-import 206954_load_report.py as report  # Use the correct file name (update accordingly)
+from load_report_206954 import run_dashboard
 
-# Run the Streamlit app logic from 206954_load_report.py
-report.run_dashboard()
+if __name__ == "__main__":
+    run_dashboard()
