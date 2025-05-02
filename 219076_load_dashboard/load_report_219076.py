@@ -99,7 +99,7 @@ def run_dashboard():
     if section == "Executive Summary":
         st.subheader("📋 Executive Summary")
 
-        st.markdown("**Description:** A K-12 school in St. Lawrence County, NY")
+        st.markdown("**Description:** A K-12 school in Delaware County, NY")
         st.markdown("**Compare to:** 1-story 75k square foot primary school in Delaware County, NY")
         st.markdown("**Heating source:** Natural gas")
         st.markdown("**Equipment:**")
@@ -348,10 +348,12 @@ def run_dashboard():
 
         st.markdown("---")
         st.markdown("**Insights:**")
-        st.markdown("""
+        st.markdown("""                    
         The low load factor provides some opportunities for energy efficiency improvements. 
                     
         However, the relatively low demand in combination with the low load factor indicates that there is very little opportunity for demand response and load shifting, thus providing a low Grid Discovery opportunity score of 220.
+                    
+        The Grid Discovery Opportunity score is a unitless  number that ranges between 0-2000 that measures the relationship between how spikey the load profile is and the magnitude of demand. Buildings with low load factor and high demand tend to have the highest scores.
         """)
 
 
@@ -423,6 +425,12 @@ def run_dashboard():
         # Display in table format
         top_10_df = pd.DataFrame(top_10_peaks_with_time)
         st.dataframe(top_10_df)
+
+        st.markdown("---")
+        st.markdown("**Insights:**")
+        st.markdown("""                    
+        It looks like the top 3 peak days occur right around when school is about to start with majority of the peak days occuring in the middle of the day, creating a great potential for solar + battery storage.
+        """)
 
 
     elif section == "Hourly Load Heatmap":
@@ -691,6 +699,8 @@ def run_dashboard():
         Annual load is fairly consistent with gradual increases throughout the year.
 
         The peak occurs very infrequently, raising the concept that this profile might benefit more from energy efficiency upgrades rather than peak shaving opportunities.
+                    
+        Although the peaks occur in the middle of day, making a great situation for solar + battery storage, the relatively small load profile would lengthen the payback period.
         """)
 
 
@@ -811,6 +821,14 @@ def run_dashboard():
 
         st.plotly_chart(fig, use_container_width=True, config={'staticPlot': True})
 
+        st.markdown("---")
+        st.markdown("**Insights:**")
+        st.markdown("""                    
+        The sudden rate of change around 14 hours is indicative of systems suddenly ramping up and ramping down. Looking at the Load Trends for Top 3 Peak Days, we see the load rapidly rise around 5am and fall around 8pm.
+                    
+        
+        """)
+
 
     elif section == "Load Duration Curve Comparison: Annual vs Peak Day":
         st.subheader("📊 Load Duration Curve Comparison: Annual vs Peak Day")
@@ -852,7 +870,7 @@ def run_dashboard():
         st.dataframe(comparison_df)
 
         # Interpretation
-        st.markdown("### 🧠 Why the Comparison Matters")
+        st.markdown("### 💡 Why the Comparison Matters")
         st.markdown("""
         While the peak day will always be more extreme:
 
@@ -862,6 +880,9 @@ def run_dashboard():
 
         **This analysis helps answer:**
         > “Is my peak behavior just a bad day — or a recurring risk?”
+                    
+        **Insight:**
+        The peak day is significantly more extreme than the annual load profile, indicating that the system experiences short-duration peaks that could be shaved for savings. This suggests a potential opportunity for demand response or load shifting strategies to reduce peak demand and associated costs.
         """)
 
     elif section == "Seasonal Weekly Load Profiles":
