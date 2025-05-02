@@ -352,6 +352,8 @@ def run_dashboard():
         The low load factor provides some opportunities for energy efficiency improvements. 
                     
         The relatively medium-high demand in combination with the low load factor indicates that there are some opportunities for demand response and load shifting, thus providing a relatively high Grid Discovery opportunity score of 600.
+        
+        The Grid Discovery Opportunity score is a unitless number that ranges between 0-2000 that measures the relationship between how spikey the load profile is and the magnitude of demand. Buildings with low load factor and high demand tend to have the highest scores.
         """)
 
 
@@ -424,6 +426,12 @@ def run_dashboard():
         top_10_df = pd.DataFrame(top_10_peaks_with_time)
         st.dataframe(top_10_df)
 
+        st.markdown("---")
+        st.markdown("**Insights:**")
+        st.markdown("""
+        It looks like the top 2 peak days occur right around when school is about to start for the year with peak times between late mornings and early aftenoon, creating a great potential for solar + battery storage.
+        """)
+
 
     elif section == "Hourly Load Heatmap":
         st.subheader("🕒 Hourly Load Heatmap (24hr × 365 Days)")
@@ -491,6 +499,12 @@ def run_dashboard():
         )
 
         st.plotly_chart(fig, use_container_width=True, config={'staticPlot': True})
+
+        st.markdown("---")
+        st.markdown("**Insights:**")
+        st.markdown("""
+        The relatively high peak demand in the summer months (June, July, August) indicates that the building is likely using a lot of cooling energy, representing a significant opportunity for peak shaving and demand reduction.
+        """)
 
     elif section == "Daily Energy Consumption":
         st.subheader("📅 Daily Energy Consumption")
@@ -810,6 +824,15 @@ def run_dashboard():
         
 
         st.plotly_chart(fig, use_container_width=True, config={'staticPlot': True})
+
+
+        st.markdown("---")
+        st.markdown("**Insights:**")
+        st.markdown("""
+        There are two points of considerable load change. When we look at the Load Trends for Top 3 Peak days, we can see load drasitically ramping up and down.
+                    
+        There is potential for a builiding managment system to better control the load to limit the ramp rate and reduce the peak demand.
+        """)
 
 
     elif section == "Load Duration Curve Comparison: Annual vs Peak Day":
